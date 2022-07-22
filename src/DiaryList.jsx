@@ -1,6 +1,6 @@
 import DiaryItem from "./DiaryItem";
 
-function DiaryList({ diaryList }) {
+function DiaryList({ diaryList, onDelete }) {
   console.log(diaryList);
   return (
     <div className="DiaryList">
@@ -9,7 +9,7 @@ function DiaryList({ diaryList }) {
       <div>
         {diaryList.map((it) => (
           // jsx 요소 반환으로 인한 소괄호 for map 메소드
-          <DiaryItem key={it.id} {...it} />
+          <DiaryItem onDelete={onDelete} key={it.id} {...it} />
         ))}
       </div>
     </div>

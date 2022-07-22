@@ -1,4 +1,5 @@
-function DiaryItem({ author, content, emotion, created_date, id }) {
+function DiaryItem({ author, content, emotion, created_date, id, onDelete }) {
+  // console.log("id :>> ", id);
   return (
     <div className="DiaryItem">
       <div className="info">
@@ -11,6 +12,15 @@ function DiaryItem({ author, content, emotion, created_date, id }) {
         </span>
       </div>
       <div className="content">{content}</div>
+      <button
+        onClick={() => {
+          if (window.confirm(`일기(id: ${id})를 삭제할까요?`)) {
+            onDelete(id);
+          }
+        }}
+      >
+        삭제하기
+      </button>
     </div>
   );
 }
