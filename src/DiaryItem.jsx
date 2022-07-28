@@ -1,5 +1,46 @@
-function DiaryItem({ author, content, emotion, created_date, id, onDelete }) {
-  // console.log("id :>> ", id);
+import { useRef, useState } from "react";
+
+function DiaryItem({
+  author,
+  content,
+  emotion,
+  created_date,
+  id,
+  onRemove,
+  onEdit,
+}) {
+  const [isEdit, setIsEdit] = useState(false);
+  const [localContent, setLocalContent] = useState(content);
+  const localContentInput = useRef();
+
+  const handleRemove = () => {
+    if (window.confirm(`일기(id: ${id})를 삭제할까요?`)) {
+      onRemove(id);
+    }
+  };
+
+  function toggleEdit() {
+    setIsEdit(!isEdit);
+  }
+
+  function handleQuitEdit() {
+    setIsEdit(false);
+    setLocalContent(content);
+  }
+
+  function handleEdit() {
+    if (localContent.length < 5) {
+      localContentInput.current.focus();
+      return;
+    }
+
+    if (window.confirm(`일기(id:${id})를 수정할까요?`)) {
+      onEdit(id, localContent);
+      toggleEdit();
+      alert(`일기(id:${id})를 수정했어요.`);
+    }
+  }
+
   return (
     <div className="DiaryItem">
       <div className="info">
@@ -11,16 +52,31 @@ function DiaryItem({ author, content, emotion, created_date, id, onDelete }) {
           작성 날짜: {new Date(created_date).toLocaleString()}
         </span>
       </div>
-      <div className="content">{content}</div>
-      <button
-        onClick={() => {
-          if (window.confirm(`일기(id: ${id})를 삭제할까요?`)) {
-            onDelete(id);
-          }
-        }}
-      >
-        삭제하기
-      </button>
+      <div className="content">
+        {isEdit ? (
+          <>
+            <textarea
+              ref={localContentInput}
+              value={localContent}
+              onChange={(e) => setLocalContent(e.target.value)}
+            />
+          </>
+        ) : (
+          <>{content}</>
+        )}
+      </div>
+
+      {isEdit ? (
+        <>
+          <button onClick={handleQuitEdit}>수정 취소</button>
+          <button onClick={handleEdit}>수정 완료</button>
+        </>
+      ) : (
+        <>
+          <button onClick={handleRemove}>삭제</button>
+          <button onClick={toggleEdit}>수정</button>
+        </>
+      )}
     </div>
   );
 }
