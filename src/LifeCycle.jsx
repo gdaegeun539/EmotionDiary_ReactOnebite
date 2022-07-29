@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+/**
+ * React Lifecycle 학습용 파일입니다.
+ * 실 프로젝트에서 사용되지 않는 파일입니다.
+ */
+
 function UnmountTest() {
   useEffect(() => {
     console.log("Debug>>> Mount!");
