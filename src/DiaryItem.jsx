@@ -1,14 +1,12 @@
-import { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
-function DiaryItem({
-  author,
-  content,
-  emotion,
-  created_date,
-  id,
-  onRemove,
-  onEdit,
-}) {
+function DiaryItem({ author, content, emotion, created_date, id }) {
+  useEffect(() => {
+    console.log(`Debug>>> ${id} 아이템 렌더`);
+  });
+
+  const { onEdit, onRemove } = useContext(DiaryDispatchContext);
   const [isEdit, setIsEdit] = useState(false);
   const [localContent, setLocalContent] = useState(content);
   const localContentInput = useRef();
@@ -81,4 +79,4 @@ function DiaryItem({
   );
 }
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

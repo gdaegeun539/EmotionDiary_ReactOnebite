@@ -1,6 +1,12 @@
-import { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
-function DiaryEditor({ onCreate }) {
+function DiaryEditor() {
+  useEffect(() => {
+    console.log("Debug>>> DiaryEditor 렌더");
+  });
+
+  const { onCreate } = useContext(DiaryDispatchContext);
   const authorInput = useRef();
   const contentInput = useRef();
 
@@ -79,4 +85,4 @@ function DiaryEditor({ onCreate }) {
   );
 }
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);

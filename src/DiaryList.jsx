@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import { DiaryStateContext } from "./App";
 import DiaryItem from "./DiaryItem";
 
-function DiaryList({ diaryList, onRemove, onEdit }) {
+function DiaryList() {
+  const diaryList = useContext(DiaryStateContext);
+
   return (
     <div className="DiaryList">
       <h2>일기 리스트</h2>
@@ -8,7 +12,7 @@ function DiaryList({ diaryList, onRemove, onEdit }) {
       <div>
         {diaryList.map((it) => (
           // jsx 요소 반환으로 인한 소괄호 for map 메소드
-          <DiaryItem onRemove={onRemove} onEdit={onEdit} key={it.id} {...it} />
+          <DiaryItem key={it.id} {...it} />
         ))}
       </div>
     </div>
